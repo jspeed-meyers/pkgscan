@@ -25,7 +25,14 @@ class Package:
         """Retrieve data of first release"""
         # Get the version number associated with the first release
         # TODO: Double check this, especially the hard coding at the end
+        # TODO: Probably unpack this line too
+        # TODO: This is broken. I need to get all the semantic version and then
+        # sort them.
+        version_list = list(self.pypi_data['releases'])
+        sorted_version_list = sorted(version_list)
+        print(sorted_version_list)
         first_release_version = str(list(self.pypi_data['releases'].items())[1][0])
+        print(first_release_version)
         # Extract upload time
         upload_time = self.pypi_data['releases'][first_release_version][0]['upload_time']
         first_release_date = upload_time[:10]
