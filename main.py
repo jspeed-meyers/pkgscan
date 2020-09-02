@@ -1,6 +1,8 @@
 """Package class to store data about one PyPI package
 
 """
+import sys
+
 import requests
 
 from helpers import sort_semantic_version
@@ -12,8 +14,8 @@ class Package:
         self.pkg_name = pkg_name
         self.pypi_data = self.get_pypi_data()
         self.first_release_date = self.get_first_release_date()
-        #.last_release_date = self.get_last_release_date()
-        self.get_author_email = self.get_author_email()
+        self.last_release_date = self.get_last_release_date()
+        self.author_email = self.get_author_email()
     
     def get_pypi_data(self):
         """Retrieve metadata from PyPI json endpoint"""
@@ -74,5 +76,6 @@ class Package:
 
 
 if __name__ == "__main__":
-    package = Package("requests")
+
+    package = Package(sys.argv[1])
     package.print()
