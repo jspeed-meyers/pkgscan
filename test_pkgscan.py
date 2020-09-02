@@ -16,9 +16,9 @@ def test_PackageClass():
 def test_get_first_release_date():
     """Test get_first_release_date function"""
     package = Package("requests")
-    assert package.get_first_release_date() == "2011-02-14"
+    assert package.first_release_date == "2011-02-14"
     package = Package("numpy")
-    assert package.get_first_release_date() == "2006-12-02"
+    assert package.first_release_date == "2006-12-02"
 
 def test_get_last_release_date():
     """Test get_last_release_date function
@@ -28,7 +28,7 @@ def test_get_last_release_date():
     John Speed Meyers on PyPI that is not maintained.
     """
     package = Package("pcap2map")
-    assert package.get_last_release_date() == "2020-04-10"
+    assert package.last_release_date == "2020-04-10"
 
 def test_get_author_email():
     """Test get_author_email function"""
