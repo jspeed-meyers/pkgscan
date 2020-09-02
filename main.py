@@ -3,7 +3,8 @@
 """
 import requests
 
-# class for a package
+from helpers import sort_semantic_version
+
 class Package:
     """PyPI package class"""
 
@@ -23,18 +24,18 @@ class Package:
 
     def get_first_release_date(self):
         """Retrieve data of first release"""
-        # Get the version number associated with the first release
-        # TODO: Double check this, especially the hard coding at the end
-        # TODO: Probably unpack this line too
-        # TODO: This is broken. I need to get all the semantic version and then
-        # sort them.
+        # Get the version number associated with the first non-empty release
         version_list = list(self.pypi_data['releases'])
-        sorted_version_list = sorted(version_list)
-        print(sorted_version_list)
-        first_release_version = str(list(self.pypi_data['releases'].items())[1][0])
-        print(first_release_version)
+        sorted_version_list = sort_semantic_version(version_list)
+        # Because some versions lack any info, i.e. are empty, skip those
+        # and save the version number of the first non-empty version
+        for version in sorted_version_list:
+            if self.pypi_data['releases'][version] != []:
+                first_release_version = version
+                break
         # Extract upload time
         upload_time = self.pypi_data['releases'][first_release_version][0]['upload_time']
+        # Extract the date
         first_release_date = upload_time[:10]
         return first_release_date
 
