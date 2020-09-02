@@ -1,6 +1,7 @@
 """Package class to store data about one PyPI package
 
 """
+import json
 import sys
 
 import requests
@@ -19,9 +20,15 @@ class Package:
     
     def get_pypi_data(self):
         """Retrieve metadata from PyPI json endpoint"""
-        pkg_url = "https://pypi.org/pypi/" + self.pkg_name + "/json"
-        response = requests.get(pkg_url)
-        metadata_dict = response.json()
+        
+        try:
+            pkg_url = "https://pypi.org/pypi/" + self.pkg_name + "/json"
+            response = requests.get(pkg_url)
+            metadata_dict = response.json()
+        except json.decoder.JSONDecodeError:
+            print("ERROR: No such package on PyPI")
+            sys.exit(1)
+
         return metadata_dict
 
     def get_first_release_date(self):
@@ -68,7 +75,7 @@ class Package:
         """Print package information"""
         print("Last release date: " + self.last_release_date)
         print("First release date: " + self.first_release_date)
-        print("Author email: " + self.get_author_email)
+        print("Author email: " + self.author_email)
 
     # Print info - more info (-vv)
 
