@@ -6,6 +6,7 @@ import requests
 
 from helpers import sort_semantic_version
 
+
 class Package:
     """PyPI package class"""
 
@@ -34,16 +35,18 @@ class Package:
     def get_first_release_date(self):
         """Retrieve date of first release"""
         # Get the version number associated with the first non-empty release
-        version_list = list(self.pypi_data['releases'])
+        version_list = list(self.pypi_data["releases"])
         sorted_version_list = sort_semantic_version(version_list)
         # Because some versions lack any info, i.e. are empty, skip those
         # and save the version number of the first non-empty version
         for version in sorted_version_list:
-            if self.pypi_data['releases'][version] != []:
+            if self.pypi_data["releases"][version] != []:
                 first_release_version = version
                 break
         # Extract upload time
-        upload_time = self.pypi_data['releases'][first_release_version][0]['upload_time']
+        upload_time = self.pypi_data["releases"][first_release_version][0][
+            "upload_time"
+        ]
         # Extract the date
         first_release_date = upload_time[:10]
         return first_release_date
@@ -51,33 +54,33 @@ class Package:
     def get_last_release_date(self):
         """Retrieve date of last release"""
         # Get the version number associated with the last release
-        version_list = list(self.pypi_data['releases'])
+        version_list = list(self.pypi_data["releases"])
         sorted_version_list = sort_semantic_version(version_list)
         last_release_version = sorted_version_list[-1]
         # Extract upload time
-        upload_time = self.pypi_data['releases'][last_release_version][0]['upload_time']
+        upload_time = self.pypi_data["releases"][last_release_version][0]["upload_time"]
         last_release_date = upload_time[:10]
         return last_release_date
 
     def get_author_email(self):
         """Retrieve author email"""
-        author_email = self.pypi_data['info']['author_email']
+        author_email = self.pypi_data["info"]["author_email"]
         return author_email
 
     def get_number_versions(self):
         """Count number of versions released"""
-        version_list = list(self.pypi_data['releases'])
+        version_list = list(self.pypi_data["releases"])
         num_versions = len(version_list)
         return num_versions
 
     def get_author_name(self):
         """Get author's name"""
-        author_name = self.pypi_data['info']['author']
+        author_name = self.pypi_data["info"]["author"]
         return author_name
 
     def get_home_page(self):
         """Retrieve home page link"""
-        home_page = self.pypi_data['info']['home_page']
+        home_page = self.pypi_data["info"]["home_page"]
         return home_page
 
     # get metadata from github
