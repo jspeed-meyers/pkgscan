@@ -35,4 +35,13 @@ def test_get_author_email():
     package = Package("portunus")
     assert package.author_email == "clewis@iqt.org"
 
+def test_get_number_versions():
+    """Test get_number_versions function"""
+    package = Package("pandas")
+    assert package.number_versions >= 81
+    package = Package("six")
+    assert package.number_versions >= 27
+    package = Package("pcap2map")
+    assert package.number_versions == 1
+
 
