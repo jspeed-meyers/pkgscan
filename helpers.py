@@ -1,7 +1,5 @@
-"""Helper functions
+"""Helper functions"""
 
-
-"""
 from packaging import version
 
 def sort_semantic_version(unsorted_list):
