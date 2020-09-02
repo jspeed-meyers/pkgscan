@@ -1,3 +1,5 @@
+"""Tests for pkgscan"""
+
 from main import Package
 from helpers import sort_semantic_version
 
@@ -27,5 +29,10 @@ def test_get_last_release_date():
     """
     package = Package("pcap2map")
     assert package.get_last_release_date() == "2020-04-10"
+
+def test_get_author_email():
+    """Test get_author_email function"""
+    package = Package("portunus")
+    assert package.author_email == "clewis@iqt.org"
 
 
