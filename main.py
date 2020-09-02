@@ -14,8 +14,9 @@ class Package:
         self.pypi_data = self.get_pypi_data()
         self.first_release_date = self.get_first_release_date()
         self.last_release_date = self.get_last_release_date()
-        self.author_email = self.get_author_email()
         self.number_versions = self.get_number_versions()
+        self.author_email = self.get_author_email()
+        self.author_name = self.get_author_name()
     
     def get_pypi_data(self):
         """Retrieve metadata from PyPI json endpoint"""
@@ -70,6 +71,8 @@ class Package:
 
     def get_author_name(self):
         """Get author's name"""
+        author_name = self.pypi_data['info']['author']
+        return author_name
 
     def get_source_code_link(self):
         """Retrieve source code link"""
