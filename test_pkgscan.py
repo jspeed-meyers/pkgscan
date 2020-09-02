@@ -9,7 +9,7 @@ def test_sort_semantic_version():
     sorted_list = sort_semantic_version(unsorted_list)
     assert sorted_list == ["0.1.1", "0.3.2", "5.5.5"]
 
-def test_PackageClass():
+def test_package_class():
     """Test instantiation of package class"""
     package = Package("requests")
 
@@ -22,7 +22,7 @@ def test_get_first_release_date():
 
 def test_get_last_release_date():
     """Test get_last_release_date function
-    
+
     To avoid breaking this test when there is a change to an often
     updated package, this test uses pcap2map, a personal project of
     John Speed Meyers on PyPI that is not maintained.
@@ -61,5 +61,3 @@ def test_get_home_page():
     assert package.home_page == "http://aws.amazon.com/cli/"
     package = Package("pcap2map")
     assert package.home_page == "https://github.com/jspeed-meyers/pcap2map"
-
-
