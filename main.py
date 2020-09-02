@@ -23,7 +23,7 @@ class Package:
         return metadata_dict
 
     def get_first_release_date(self):
-        """Retrieve data of first release"""
+        """Retrieve date of first release"""
         # Get the version number associated with the first non-empty release
         version_list = list(self.pypi_data['releases'])
         sorted_version_list = sort_semantic_version(version_list)
@@ -40,11 +40,11 @@ class Package:
         return first_release_date
 
     def get_last_release_date(self):
-        """Retrieve data of last release"""
-        # Get the version number associated with the first release
-        # TODO: Double check this, especially the hard coding at the end
-        last_release_version = str(list(self.pypi_data['releases'].items())[-1])
-        print(last_release_version)
+        """Retrieve date of last release"""
+        # Get the version number associated with the last release
+        version_list = list(self.pypi_data['releases'])
+        sorted_version_list = sort_semantic_version(version_list)
+        last_release_version = sorted_version_list[-1]
         # Extract upload time
         upload_time = self.pypi_data['releases'][last_release_version][0]['upload_time']
         last_release_date = upload_time[:10]
