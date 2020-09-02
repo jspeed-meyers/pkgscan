@@ -1,6 +1,4 @@
-"""Package class to store data about one PyPI package
-
-"""
+"""Package class to store data about one PyPI package"""
 import json
 import sys
 
@@ -17,10 +15,10 @@ class Package:
         self.first_release_date = self.get_first_release_date()
         self.last_release_date = self.get_last_release_date()
         self.author_email = self.get_author_email()
+        self.number_versions = self.get_number_versions()
     
     def get_pypi_data(self):
         """Retrieve metadata from PyPI json endpoint"""
-        
         try:
             pkg_url = "https://pypi.org/pypi/" + self.pkg_name + "/json"
             response = requests.get(pkg_url)
@@ -64,6 +62,18 @@ class Package:
         author_email = self.pypi_data['info']['author_email']
         return author_email
 
+    def get_number_versions(self):
+        """Count number of versions released"""
+        version_list = list(self.pypi_data['releases'])
+        num_versions = len(version_list)
+        return num_versions
+
+    def get_author_name(self):
+        """Get author's name"""
+
+    def get_source_code_link(self):
+        """Retrieve source code link"""
+
     # get metadata from github
 
     # Get metadata about maintainers
@@ -76,6 +86,7 @@ class Package:
         print("Last release date: " + self.last_release_date)
         print("First release date: " + self.first_release_date)
         print("Author email: " + self.author_email)
+        print("Number of versions: " + self.number_versions)
 
     # Print info - more info (-vv)
 
@@ -84,5 +95,7 @@ class Package:
 
 if __name__ == "__main__":
 
+    # Collect package name from command line
+    # TODO: Use argparse instead
     package = Package(sys.argv[1])
     package.print()
