@@ -30,6 +30,15 @@ def test_get_last_release_date():
     package = Package("pcap2map")
     assert package.last_release_date == "2020-04-10"
 
+def test_get_number_versions():
+    """Test get_number_versions function"""
+    package = Package("pandas")
+    assert package.number_versions >= 81
+    package = Package("six")
+    assert package.number_versions >= 27
+    package = Package("pcap2map")
+    assert package.number_versions == 1
+
 def test_get_author_email():
     """Test get_author_email function"""
     package = Package("portunus")
@@ -44,13 +53,13 @@ def test_get_author_name():
     package = Package("matplotlib")
     assert package.author_name == "John D. Hunter, Michael Droettboom"
 
-def test_get_number_versions():
-    """Test get_number_versions function"""
-    package = Package("pandas")
-    assert package.number_versions >= 81
-    package = Package("six")
-    assert package.number_versions >= 27
+def test_get_home_page():
+    """Test get_home_page function"""
+    package = Package("urllib3")
+    assert package.home_page == "https://urllib3.readthedocs.io/"
+    package = Package("awscli")
+    assert package.home_page == "http://aws.amazon.com/cli/"
     package = Package("pcap2map")
-    assert package.number_versions == 1
+    assert package.home_page == "https://github.com/jspeed-meyers/pcap2map"
 
 
