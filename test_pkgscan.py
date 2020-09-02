@@ -35,6 +35,15 @@ def test_get_author_email():
     package = Package("portunus")
     assert package.author_email == "clewis@iqt.org"
 
+def test_get_author_name():
+    """Test get_author_name function"""
+    package = Package("networkml")
+    assert package.author_name == "cglewis"
+    package = Package("botocore")
+    assert package.author_name == "Amazon Web Services"
+    package = Package("matplotlib")
+    assert package.author_name == "John D. Hunter, Michael Droettboom"
+
 def test_get_number_versions():
     """Test get_number_versions function"""
     package = Package("pandas")
