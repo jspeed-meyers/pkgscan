@@ -17,6 +17,7 @@ class Package:
         self.number_versions = self.get_number_versions()
         self.author_email = self.get_author_email()
         self.author_name = self.get_author_name()
+        self.home_page = self.get_home_page()
     
     def get_pypi_data(self):
         """Retrieve metadata from PyPI json endpoint"""
@@ -74,8 +75,11 @@ class Package:
         author_name = self.pypi_data['info']['author']
         return author_name
 
-    def get_source_code_link(self):
-        """Retrieve source code link"""
+    def get_home_page(self):
+        """Retrieve home page link"""
+        home_page = self.pypi_data['info']['home_page']
+        return home_page
+
 
     # get metadata from github
 
@@ -88,8 +92,11 @@ class Package:
         """Print package information"""
         print("Last release date: " + self.last_release_date)
         print("First release date: " + self.first_release_date)
+        print("Number of versions: " + str(self.number_versions))
+        print("Home page: " + self.home_page)
         print("Author email: " + self.author_email)
-        print("Number of versions: " + self.number_versions)
+        print("Author name: " + self.author_name)
+
 
     # Print info - more info (-vv)
 
