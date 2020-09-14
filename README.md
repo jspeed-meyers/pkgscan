@@ -13,21 +13,26 @@ UNDER DEVELOPMENT!
 
 ## Roadmap
 
-Feature | Utility | Difficulty
---------------- | --------------- | --------------- 
-maintainer's pypi account creation date | High | Low
-number of other projects maintained by maintainers | High | Low
-Check for any github link | High | Low
-Count number downloads | High | Low
-Github and pypy actually linked | High | High
-Recent change in package maintainers | High | High
-Measure package committer turnover | High | High
-Correspondence between github and PyPI code | High | High
-Similar name to often downloaded package? | High | High
-Run bandit and report | High | High
-Create aggregate risk score | High | High
-Make pkgscan work with requirements.txt | High | High
-'# github stars' | Low | Low
+Feature | Utility | Difficulty | Category
+--------------- | --------------- | --------------- | ---------------- 
+maintainer's pypi account creation date | High | Low | Identity
+number of other projects maintained by maintainers | High | Low | Identity
+Check for any github link | High | Low | Metadata
+Count number downloads | High | Low | Metadata
+Check if package is signed | High | Low | Metadata
+Github and PyPI actually linked | High | High | Metadata
+Recent change in package maintainers | High | High | Metadata
+Measure package committer turnover | High | High | Metadata
+Correspondence between github and PyPI code | High | High | Source Code
+Similar name to often downloaded package? | High | High | Metadata
+Run bandit and report | High | High | Source Code
+Run pylint and report | High | High | Source Code
+Create aggregate risk score | High | High | Functionality
+Make pkgscan work with requirements.txt | High | Low | Functionality 
+'# github stars' | Low | Low | Metadata
+Mean time between releases | Low | Low | Metadata
+Means of tying back to known entity | High | High | Identity 
+Check for tying back to signed commit | High | Low | Metadata
 
 ## Potential Mini-Research Project
 Use libraries.io to do analysis of metadata present for packages previously
