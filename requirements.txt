@@ -1,0 +1,2 @@
+packaging==20.4.0
+requests==2.24.0
