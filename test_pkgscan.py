@@ -15,7 +15,7 @@ def test_sort_semantic_version():
 
 def test_package_class():
     """Test instantiation of package class"""
-    package = Package("requests") # pylint: disable=unused-variable
+    package = Package("requests")  # pylint: disable=unused-variable
 
 
 def test_get_first_release_date():
@@ -76,12 +76,19 @@ def test_get_home_page():
 def test_get_pypi_maintainers_list():
     """Test get_pypi_maintainers_list function"""
     package = Package("pcap2map")
-    assert package.maintainers_list == ['jspeed-meyers']
+    assert package.maintainers_list == ["jspeed-meyers"]
     package = Package("networkml")
-    assert package.maintainers_list == ['cglewis', 'iqtlabsbot', 'jspeed-meyers']
+    assert package.maintainers_list == ["cglewis", "iqtlabsbot", "jspeed-meyers"]
     package = Package("pytest")
-    assert package.maintainers_list == ['The_Compiler', 'anatoly', 'flub', 'hpk',
-                                        'nicoddemus', 'pfctdayelise', 'ronny']
+    assert package.maintainers_list == [
+        "The_Compiler",
+        "anatoly",
+        "flub",
+        "hpk",
+        "nicoddemus",
+        "pfctdayelise",
+        "ronny",
+    ]
 
 
 def test_get_pypi_maintainers_data():
@@ -97,6 +104,7 @@ def test_get_pypi_maintainers_data():
     assert len(package.maintainers_data) == 2
     assert isinstance(package.maintainers_data[0], BeautifulSoup)
     assert isinstance(package.maintainers_data[1], BeautifulSoup)
+
 
 def test_get_maintainers_account_creation_date():
     """Test get_maintainers_account_creation_date function"""

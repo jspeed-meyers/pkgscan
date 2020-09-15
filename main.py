@@ -24,7 +24,9 @@ class Package:
         self.home_page = self.get_home_page()
         self.maintainers_list = self.get_pypi_maintainers_list()
         self.maintainers_data = self.get_pypi_maintainers_data()
-        self.maintainers_account_creation_date = self.get_maintainers_account_creation_date()
+        self.maintainers_account_creation_date = (
+            self.get_maintainers_account_creation_date()
+        )
 
     def get_pypi_data(self):
         """Retrieve metadata from PyPI json endpoint"""
@@ -94,8 +96,10 @@ class Package:
         # Scrape regular PyPI package site
         url = "https://pypi.org/project/" + self.pkg_name
         html = requests.get(url)
-        soup = BeautifulSoup(html.content, 'html.parser')
-        elements = soup.findAll("span", {"class": "sidebar-section__user-gravatar-text"})
+        soup = BeautifulSoup(html.content, "html.parser")
+        elements = soup.findAll(
+            "span", {"class": "sidebar-section__user-gravatar-text"}
+        )
         # Strip white space from all elements
         maintainers_full_list = [elem.string.strip() for elem in elements]
         # Remove duplicates via set, then sort a list of maintainers
@@ -108,7 +112,7 @@ class Package:
         for username in self.maintainers_list:
             url = "https://pypi.org/user/" + username
             html = requests.get(url)
-            soup = BeautifulSoup(html.content, 'html.parser')
+            soup = BeautifulSoup(html.content, "html.parser")
             maintainers_data.append(soup)
 
         return maintainers_data
