@@ -2,6 +2,7 @@
 import json
 import sys
 
+from bs4 import BeautifulSoup
 import requests
 
 from helpers import sort_semantic_version
@@ -13,12 +14,14 @@ class Package:
     def __init__(self, pkg_name):
         self.pkg_name = pkg_name
         self.pypi_data = self.get_pypi_data()
+        self.maintainers_data = self.get_pypi_maintainers_data()
         self.first_release_date = self.get_first_release_date()
         self.last_release_date = self.get_last_release_date()
         self.number_versions = self.get_number_versions()
         self.author_email = self.get_author_email()
         self.author_name = self.get_author_name()
         self.home_page = self.get_home_page()
+        self.maintainers_list = self.get_pypi_maintainers_list()
         self.maintainers_account_creation_date = self.get_maintainers_account_creation_date()
 
     def get_pypi_data(self):
@@ -32,6 +35,10 @@ class Package:
             sys.exit(1)
 
         return metadata_dict
+
+    def get_pypi_maintainers_data(self):
+        """Retrieve metadata from PyPI on all maintainers via web scraping"""
+        pass
 
     def get_first_release_date(self):
         """Retrieve date of first release"""
@@ -83,6 +90,19 @@ class Package:
         """Retrieve home page link"""
         home_page = self.pypi_data["info"]["home_page"]
         return home_page
+
+    def get_pypi_maintainers_list(self):
+        """Retrieve list of PyPI maintainers via web scraping"""
+        # Scrape regular PyPI package site
+        url = "https://pypi.org/project/" + self.pkg_name
+        html = requests.get(url)
+        soup = BeautifulSoup(html.content, 'html.parser')
+        elements = soup.findAll("span", {"class": "sidebar-section__user-gravatar-text"})
+        # Strip white space from all elements
+        maintainers_full_list = [elem.string.strip() for elem in elements]
+        # Remove duplicates via set, then sort a list of maintainers
+        maintainers_list = sorted(list(set(maintainers_full_list)))
+        return maintainers_list
 
     def get_maintainers_account_creation_date(self):
         """Retrieve dates that maintainers PyPI accounts were created"""
