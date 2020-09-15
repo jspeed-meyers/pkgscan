@@ -11,6 +11,8 @@ from helpers import sort_semantic_version
 class Package:
     """PyPI package class"""
 
+    # pylint: disable=too-many-instance-attributes
+
     def __init__(self, pkg_name):
         self.pkg_name = pkg_name
         self.pypi_data = self.get_pypi_data()
