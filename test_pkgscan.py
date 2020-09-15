@@ -75,6 +75,8 @@ def test_get_pypi_maintainers_list():
     """Test get_pypi_maintainers_list function"""
     package = Package("pcap2map")
     assert package.maintainers_list == ['jspeed-meyers']
+    package = Package("networkml")
+    assert package.maintainers_list == ['cglewis', 'iqtlabsbot', 'jspeed-meyers']
 
 def test_get_maintainers_account_creation_date():
     """Test get_maintainers_account_creation_date function"""
