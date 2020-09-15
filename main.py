@@ -14,7 +14,6 @@ class Package:
     def __init__(self, pkg_name):
         self.pkg_name = pkg_name
         self.pypi_data = self.get_pypi_data()
-        self.maintainers_data = self.get_pypi_maintainers_data()
         self.first_release_date = self.get_first_release_date()
         self.last_release_date = self.get_last_release_date()
         self.number_versions = self.get_number_versions()
@@ -22,6 +21,7 @@ class Package:
         self.author_name = self.get_author_name()
         self.home_page = self.get_home_page()
         self.maintainers_list = self.get_pypi_maintainers_list()
+        self.maintainers_data = self.get_pypi_maintainers_data()
         self.maintainers_account_creation_date = self.get_maintainers_account_creation_date()
 
     def get_pypi_data(self):
@@ -35,10 +35,6 @@ class Package:
             sys.exit(1)
 
         return metadata_dict
-
-    def get_pypi_maintainers_data(self):
-        """Retrieve metadata from PyPI on all maintainers via web scraping"""
-        pass
 
     def get_first_release_date(self):
         """Retrieve date of first release"""
@@ -103,6 +99,17 @@ class Package:
         # Remove duplicates via set, then sort a list of maintainers
         maintainers_list = sorted(list(set(maintainers_full_list)))
         return maintainers_list
+
+    def get_pypi_maintainers_data(self):
+        """Retrieve metadata from PyPI on all maintainers via web scraping"""
+        maintainers_data = []
+        for username in self.maintainers_list:
+            url = "https://pypi.org/user/" + username
+            html = requests.get(url)
+            soup = BeautifulSoup(html.content, 'html.parser')
+            maintainers_data.append(soup)
+
+        return maintainers_data
 
     def get_maintainers_account_creation_date(self):
         """Retrieve dates that maintainers PyPI accounts were created"""
