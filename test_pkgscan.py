@@ -77,6 +77,9 @@ def test_get_pypi_maintainers_list():
     assert package.maintainers_list == ['jspeed-meyers']
     package = Package("networkml")
     assert package.maintainers_list == ['cglewis', 'iqtlabsbot', 'jspeed-meyers']
+    package = Package("pytest")
+    assert package.maintainers_list == ['The_Compiler', 'anatoly', 'flub', 'hpk',
+                                        'nicoddemus', 'pfctdayelise', 'ronny']
 
 def test_get_maintainers_account_creation_date():
     """Test get_maintainers_account_creation_date function"""
