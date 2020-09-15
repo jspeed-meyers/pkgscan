@@ -9,7 +9,8 @@ Make it easier to assess the provenance of the package and associated maintainer
 on PyPI to enable an informed assessment of the package. Moreover, make this
 process quicker than clicking through PyPI and related links.
 
-UNDER DEVELOPMENT!
+## Unit Tests
+`pytest`
 
 ## Roadmap
 
