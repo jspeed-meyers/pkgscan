@@ -15,7 +15,7 @@ def test_sort_semantic_version():
 
 def test_package_class():
     """Test instantiation of package class"""
-    package = Package("requests")
+    package = Package("requests") # pylint: disable=unused-variable
 
 
 def test_get_first_release_date():
