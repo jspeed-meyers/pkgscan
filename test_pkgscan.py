@@ -71,6 +71,11 @@ def test_get_home_page():
     assert package.home_page == "https://github.com/jspeed-meyers/pcap2map"
 
 
+def test_get_pypi_maintainers_list():
+    """Test get_pypi_maintainers_list function"""
+    package = Package("pcap2map")
+    assert package.maintainers_list == ['jspeed-meyers']
+
 def test_get_maintainers_account_creation_date():
     """Test get_maintainers_account_creation_date function"""
     package = Package("pcap2map")
