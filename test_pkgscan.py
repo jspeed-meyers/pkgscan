@@ -1,5 +1,7 @@
 """Tests for pkgscan"""
 
+from bs4 import BeautifulSoup
+
 from main import Package
 from helpers import sort_semantic_version
 
@@ -80,6 +82,21 @@ def test_get_pypi_maintainers_list():
     package = Package("pytest")
     assert package.maintainers_list == ['The_Compiler', 'anatoly', 'flub', 'hpk',
                                         'nicoddemus', 'pfctdayelise', 'ronny']
+
+
+def test_get_pypi_maintainers_data():
+    """Test get_pypi_maintainers_data function"""
+    package = Package("portunus")
+    assert len(package.maintainers_data) == 2
+    assert isinstance(package.maintainers_data[0], BeautifulSoup)
+    assert isinstance(package.maintainers_data[1], BeautifulSoup)
+    package = Package("faucet")
+    assert len(package.maintainers_data) == 1
+    assert isinstance(package.maintainers_data[0], BeautifulSoup)
+    package = Package("ryu")
+    assert len(package.maintainers_data) == 2
+    assert isinstance(package.maintainers_data[0], BeautifulSoup)
+    assert isinstance(package.maintainers_data[1], BeautifulSoup)
 
 def test_get_maintainers_account_creation_date():
     """Test get_maintainers_account_creation_date function"""
