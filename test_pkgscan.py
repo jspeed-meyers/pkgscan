@@ -69,3 +69,9 @@ def test_get_home_page():
     assert package.home_page == "http://aws.amazon.com/cli/"
     package = Package("pcap2map")
     assert package.home_page == "https://github.com/jspeed-meyers/pcap2map"
+
+
+def test_get_maintainers_account_creation_date():
+    """Test get_maintainers_account_creation_date function"""
+    package = Package("pcap2map")
+    assert package.maintainers_account_creation_date == "8/26/2020"

@@ -19,6 +19,7 @@ class Package:
         self.author_email = self.get_author_email()
         self.author_name = self.get_author_name()
         self.home_page = self.get_home_page()
+        self.maintainers_account_creation_date = self.get_maintainers_account_creation_date()
 
     def get_pypi_data(self):
         """Retrieve metadata from PyPI json endpoint"""
@@ -82,6 +83,10 @@ class Package:
         """Retrieve home page link"""
         home_page = self.pypi_data["info"]["home_page"]
         return home_page
+
+    def get_maintainers_account_creation_date(self):
+        """Retrieve dates that maintainers PyPI accounts were created"""
+        pass
 
     # get metadata from github
 
