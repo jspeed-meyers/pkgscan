@@ -2,15 +2,16 @@
 Scan PyPI package metadata to assess security risks
 
 ## Usage
-`>>> git clone https://github.com/jspeed-meyers/pkgscan.git`
+`$ git clone https://github.com/jspeed-meyers/pkgscan.git`
 
-`>>> cd pkgscan`
+`$ cd pkgscan`
 
-`>>> python main.py [package_name]`
+`$ python main.py [package_name]`
 
 For instance:
 
-```>>> python main.py requests
+```
+$ python main.py requests
 Last release date: 2020-06-17
 First release date: 2011-02-14
 Number of versions: 140
