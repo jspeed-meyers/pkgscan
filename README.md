@@ -15,7 +15,8 @@ Home page: https://requests.readthedocs.io
 Author email: me@kennethreitz.org
 Author name: Kenneth Reitz
 Maintainer usernames: Lukasa graffatcolmingov nateprewitt
-Maintainer accounts creation dates: Feb 12, 2017```
+Maintainer accounts creation dates: Feb 12, 2017
+```
 
 
 ## Motivation
