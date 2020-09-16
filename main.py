@@ -118,12 +118,30 @@ class Package:
         return maintainers_data
 
     def get_maintainers_account_creation_date(self):
-        """Retrieve dates that maintainers PyPI accounts were created"""
-        pass
+        """Retrieve dates that maintainers' PyPI accounts were created"""
+
+        dates = []
+        # Loop through beautiful soup-ified maintainer data to extract dates
+        for soup in self.maintainers_data:
+            # Because 'time' elements will appear in multiple locations on
+            # a PyPI maintainer profile page, filter in only those html
+            # tags associated with author metadata
+            author_metadata_elements = soup.findAll(
+                "div", {"class": "author-profile__metadiv"}
+            )
+            for elem in author_metadata_elements:
+                # Extract any time-related elements and add to dates list
+                # if it exists
+                date = elem.find("time")
+                if date:
+                    # The [0] slice is because contents is a list and
+                    # strip() is not a valid method for lists
+                    dates.append(date.contents[0].strip())
+
+        return dates
+
 
     # get metadata from github
-
-    # Get metadata about maintainers
 
     # Compare to other package names
 
@@ -140,6 +158,14 @@ class Package:
         print("Home page: " + self.home_page)
         print("Author email: " + self.author_email)
         print("Author name: " + self.author_name)
+        print("Maintainer usernames: ", end="")
+        for maintainer in self.maintainers_list:
+            print(maintainer, end=" ")
+        print()
+        print("Maintainer accounts creation dates: ", end="")
+        for date in self.maintainers_account_creation_date:
+            print(date, end=" ")
+        print()
 
     # Print info - more info (-vv)
 
