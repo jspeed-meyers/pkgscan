@@ -109,4 +109,12 @@ def test_get_pypi_maintainers_data():
 def test_get_maintainers_account_creation_date():
     """Test get_maintainers_account_creation_date function"""
     package = Package("pcap2map")
-    assert package.maintainers_account_creation_date == "8/26/2020"
+    assert package.maintainers_account_creation_date == ["Nov 7, 2019"]
+    package = Package("six")
+    assert package.maintainers_account_creation_date == []
+    package = Package("good")
+    assert package.maintainers_account_creation_date == ['Jan 3, 2014']
+    package = Package("ryu")
+    assert package.maintainers_account_creation_date == ['May 31, 2017']
+    package = Package("networkml")
+    assert package.maintainers_account_creation_date == ['Jul 24, 2020', 'Nov 7, 2019']
