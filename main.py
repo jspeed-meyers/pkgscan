@@ -31,6 +31,7 @@ class Package:
         self.number_of_packages_maintained_by_maintainers = (
             self.get_number_of_packages_maintained_by_maintainers()
         )
+        self.github_page = self.get_github_page()
 
     def get_pypi_data(self):
         """Retrieve metadata from PyPI json endpoint"""
@@ -165,7 +166,22 @@ class Package:
 
         return num_packages
 
-    # get metadata from github
+    def get_github_page(self):
+        """Retrieve github page URL if available"""
+
+        github_link = ""
+        # Check potential fields for a github link
+        potential_github_fields = [self.pypi_data["info"]["home_page"]]
+        # Add project url fields
+        for _, url in self.pypi_data["info"]["project_urls"].items():
+            potential_github_fields.append(url)
+        for field in potential_github_fields:
+            # Any field with github in it must be github link
+            if "github" in field:
+                github_link = field
+                break
+
+        return github_link
 
     # Compare to other package names
 
@@ -180,6 +196,7 @@ class Package:
         print("First release date: " + self.first_release_date)
         print("Number of versions: " + str(self.number_versions))
         print("Home page: " + self.home_page)
+        print("Github link: " + self.github_page)
         print("Author email: " + self.author_email)
         print("Author name: " + self.author_name)
         print("Maintainer usernames: ", end="")
