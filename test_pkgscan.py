@@ -127,3 +127,12 @@ def test_get_number_of_packages_maintained_by_maintainers():
     assert package.number_of_packages_maintained_by_maintainers == ['9', '3', '2']
     package = Package("matplotlib")
     assert package.number_of_packages_maintained_by_maintainers == ['3', '38', '17', '35', '10']
+
+def test_get_github_page():
+    """Test get_github_page function"""
+    package = Package("pcap2map")
+    assert package.github_page == "https://github.com/jspeed-meyers/pcap2map"
+    package = Package("networkml")
+    assert package.github_page == "https://github.com/IQTLabs/NetworkML"
+    package = Package("requests")
+    assert package.github_page == "https://github.com/psf/requests"
