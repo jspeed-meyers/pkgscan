@@ -14,6 +14,7 @@ class Package:
     # pylint: disable=too-many-instance-attributes
 
     def __init__(self, pkg_name):
+        # TODO: Consider refactoring into dictionary
         self.pkg_name = pkg_name
         self.pypi_data = self.get_pypi_data()
         self.first_release_date = self.get_first_release_date()
@@ -26,6 +27,9 @@ class Package:
         self.maintainers_data = self.get_pypi_maintainers_data()
         self.maintainers_account_creation_date = (
             self.get_maintainers_account_creation_date()
+        )
+        self.number_of_packages_maintained_by_maintainers = (
+            self.get_number_of_packages_maintained_by_maintainers()
         )
 
     def get_pypi_data(self):
@@ -140,6 +144,26 @@ class Package:
 
         return dates
 
+    def get_number_of_packages_maintained_by_maintainers(self):
+        """Retrieve number of PyPI packages maintained by each maintainer"""
+
+        num_packages = []
+
+        # Loop thru beautiful-souped maintainer list
+        for soup in self.maintainers_data:
+            package_count_elements = soup.findAll(
+                "div", {"class": "left-layout__main"}
+            )
+            # Extract count of number of projects maintained for each profile
+            for element in package_count_elements:
+                num_package_element = element.find('h2')
+                # Remove whitespace
+                num_package_element_stripped = num_package_element.contents[0].strip()
+                # Take only number from the number of packages, drop "packages" units
+                num_package = num_package_element_stripped.split(' ')[0]
+                num_packages.append(num_package)
+
+        return num_packages
 
     # get metadata from github
 
@@ -165,6 +189,10 @@ class Package:
         print("Maintainer accounts creation dates: ", end="")
         for date in self.maintainers_account_creation_date:
             print(date, end=" ")
+        print()
+        print("Number of packagages maintained by maintainers: ", end= " ")
+        for num in self.number_of_packages_maintained_by_maintainers:
+            print(num, end=" ")
         print()
 
     # Print info - more info (-vv)
