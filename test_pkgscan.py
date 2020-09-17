@@ -118,3 +118,12 @@ def test_get_maintainers_account_creation_date():
     assert package.maintainers_account_creation_date == ['May 31, 2017']
     package = Package("networkml")
     assert package.maintainers_account_creation_date == ['Jul 24, 2020', 'Nov 7, 2019']
+
+def test_get_number_of_packages_maintained_by_maintainers():
+    """Test get_number_of_packages_maintained_by_maintainers"""
+    package = Package("pcap2map")
+    assert package.number_of_packages_maintained_by_maintainers == ['2']
+    package = Package("networkml")
+    assert package.number_of_packages_maintained_by_maintainers == ['9', '3', '2']
+    package = Package("matplotlib")
+    assert package.number_of_packages_maintained_by_maintainers == ['3', '38', '17', '35', '10']
