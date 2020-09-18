@@ -23,6 +23,7 @@ class Package:
         self.author_email = self.get_author_email()
         self.author_name = self.get_author_name()
         self.home_page = self.get_home_page()
+        self.pypi_pkg_signed = self.is_pypi_pkg_signed()
         self.maintainers_list = self.get_pypi_maintainers_list()
         self.maintainers_data = self.get_pypi_maintainers_data()
         self.maintainers_account_creation_date = (
@@ -97,6 +98,17 @@ class Package:
         """Retrieve home page link"""
         home_page = self.pypi_data["info"]["home_page"]
         return home_page
+
+    def is_pypi_pkg_signed(self):
+        """Check if latest version of package is signed"""
+        #TODO: Package up this code block into fnto function since
+        # it is duplicated from get_last_release date.
+        version_list = list(self.pypi_data["releases"])
+        sorted_version_list = sort_semantic_version(version_list)
+        last_release_version = sorted_version_list[-1]
+        # Extract whether there is a signature
+        is_signed = self.pypi_data["releases"][last_release_version][0]["has_sig"]
+        return is_signed
 
     def get_pypi_maintainers_list(self):
         """Retrieve list of PyPI maintainers via web scraping"""
