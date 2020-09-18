@@ -101,7 +101,7 @@ class Package:
 
     def is_pypi_pkg_signed(self):
         """Check if latest version of package is signed"""
-        #TODO: Package up this code block into fnto function since
+        # TODO: Package up this code block into fnto function since
         # it is duplicated from get_last_release date.
         version_list = list(self.pypi_data["releases"])
         sorted_version_list = sort_semantic_version(version_list)
@@ -166,16 +166,14 @@ class Package:
 
         # Loop thru beautiful-souped maintainer list
         for soup in self.maintainers_data:
-            package_count_elements = soup.findAll(
-                "div", {"class": "left-layout__main"}
-            )
+            package_count_elements = soup.findAll("div", {"class": "left-layout__main"})
             # Extract count of number of projects maintained for each profile
             for element in package_count_elements:
-                num_package_element = element.find('h2')
+                num_package_element = element.find("h2")
                 # Remove whitespace
                 num_package_element_stripped = num_package_element.contents[0].strip()
                 # Take only number from the number of packages, drop "packages" units
-                num_package = num_package_element_stripped.split(' ')[0]
+                num_package = num_package_element_stripped.split(" ")[0]
                 num_packages.append(num_package)
 
         return num_packages
@@ -207,7 +205,7 @@ class Package:
             # TODO: Create try-except that catches rate limiting
             # and then uses web scraping instead of API in that case
             repo_info = self.github_page.split("/")[-2:]
-            url_end = '/'.join(repo_info)
+            url_end = "/".join(repo_info)
             github_url = "https://api.github.com/repos/" + url_end
             response = requests.get(github_url)
             metadata_dict = response.json()
@@ -221,7 +219,7 @@ class Package:
 
         if self.github_page:
             try:
-                num_stars = self.github_data['stargazers_count']
+                num_stars = self.github_data["stargazers_count"]
             except KeyError as e:
                 num_stars = "Rate limiting"
 
@@ -251,7 +249,7 @@ class Package:
         for date in self.maintainers_account_creation_date:
             print(date, end=" ")
         print()
-        print("Number of packagages maintained by maintainers: ", end= " ")
+        print("Number of packagages maintained by maintainers: ", end=" ")
         for num in self.number_of_packages_maintained_by_maintainers:
             print(num, end=" ")
         print()
