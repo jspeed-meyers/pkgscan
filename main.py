@@ -253,7 +253,7 @@ class Package:
         for num in self.number_of_packages_maintained_by_maintainers:
             print(num, end=" ")
         print()
-        print("Github stars: " + self.github_stars)
+        print("Github stars: " + str(self.github_stars))
 
     # Print info - more info (-vv)
 
