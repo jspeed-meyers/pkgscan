@@ -5,6 +5,8 @@ from bs4 import BeautifulSoup
 from main import Package
 from helpers import sort_semantic_version
 
+# TODO: Instantiate packages once up here and then check attributes
+# in tests below
 
 def test_sort_semantic_version():
     """Test sort_semantic_version function"""
@@ -12,11 +14,9 @@ def test_sort_semantic_version():
     sorted_list = sort_semantic_version(unsorted_list)
     assert sorted_list == ["0.1.1", "0.3.2", "5.5.5"]
 
-
 def test_package_class():
     """Test instantiation of package class"""
     package = Package("requests")  # pylint: disable=unused-variable
-
 
 def test_get_first_release_date():
     """Test get_first_release_date function"""
@@ -24,7 +24,6 @@ def test_get_first_release_date():
     assert package.first_release_date == "2011-02-14"
     package = Package("numpy")
     assert package.first_release_date == "2006-12-02"
-
 
 def test_get_last_release_date():
     """Test get_last_release_date function
@@ -36,7 +35,6 @@ def test_get_last_release_date():
     package = Package("pcap2map")
     assert package.last_release_date == "2020-04-10"
 
-
 def test_get_number_versions():
     """Test get_number_versions function"""
     package = Package("pandas")
@@ -46,12 +44,10 @@ def test_get_number_versions():
     package = Package("pcap2map")
     assert package.number_versions == 1
 
-
 def test_get_author_email():
     """Test get_author_email function"""
     package = Package("portunus")
     assert package.author_email == "clewis@iqt.org"
-
 
 def test_get_author_name():
     """Test get_author_name function"""
@@ -62,7 +58,6 @@ def test_get_author_name():
     package = Package("matplotlib")
     assert package.author_name == "John D. Hunter, Michael Droettboom"
 
-
 def test_get_home_page():
     """Test get_home_page function"""
     package = Package("urllib3")
@@ -71,7 +66,6 @@ def test_get_home_page():
     assert package.home_page == "http://aws.amazon.com/cli/"
     package = Package("pcap2map")
     assert package.home_page == "https://github.com/jspeed-meyers/pcap2map"
-
 
 def test_get_pypi_maintainers_list():
     """Test get_pypi_maintainers_list function"""
@@ -90,7 +84,6 @@ def test_get_pypi_maintainers_list():
         "ronny",
     ]
 
-
 def test_get_pypi_maintainers_data():
     """Test get_pypi_maintainers_data function"""
     package = Package("portunus")
@@ -104,7 +97,6 @@ def test_get_pypi_maintainers_data():
     assert len(package.maintainers_data) == 2
     assert isinstance(package.maintainers_data[0], BeautifulSoup)
     assert isinstance(package.maintainers_data[1], BeautifulSoup)
-
 
 def test_get_maintainers_account_creation_date():
     """Test get_maintainers_account_creation_date function"""
@@ -149,8 +141,6 @@ def test_get_github_data():
         assert package.github_data['id'] == 254624727
     except KeyError as e:
         pass
-    # TODO: Add more test cases
-
 
 def test_get_github_stars():
     """Test get_github_stars function"""
@@ -161,4 +151,10 @@ def test_get_github_stars():
         assert package.github_stars >= 43518
     elif isinstance(package.github_stars, str):
         package.github_stars == "Rate limiting"
-    # TODO: Add more test cases
+
+def test_is_pypi_package_signed():
+    """Test is_pypi_package_signed functionality"""
+    package = Package("pcap2map")
+    assert package.pypi_pkg_signed == False
+    package = Package("django")
+    assert package.pypi_pkg_signed == True
