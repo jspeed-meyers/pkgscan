@@ -177,6 +177,6 @@ def test_get_github_stars():
 def test_is_pypi_package_signed():
     """Test is_pypi_package_signed functionality"""
     package = Package("pcap2map")
-    assert package.pypi_pkg_signed == False
+    assert not package.pypi_pkg_signed
     package = Package("django")
-    assert package.pypi_pkg_signed == True
+    assert package.pypi_pkg_signed

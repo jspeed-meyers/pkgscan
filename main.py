@@ -220,7 +220,7 @@ class Package:
         if self.github_page:
             try:
                 num_stars = self.github_data["stargazers_count"]
-            except KeyError as e:
+            except KeyError:
                 num_stars = "Rate limiting"
 
         return num_stars
