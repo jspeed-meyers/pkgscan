@@ -45,14 +45,15 @@ Mean time between releases | Low | Low | Metadata |
 Github and PyPI actually linked | High | High | Metadata |
 Recent change in package maintainers | High | High | Metadata |
 Measure package committer turnover | High | High | Metadata |
-Correspondence between github and PyPI code | High | High | Source Code |
 Similar name to often downloaded package? | High | High | Metadata |
-Run bandit and report | High | High | Source Code |
-Run pylint and report | High | High | Source Code |
+Check for tying back to signed commit | High | Low | Metadata |
+Correspondence between github and PyPI code | High | High | Source Code |
+Run bandit and report | Low | High | Source Code |
+Run pylint and report | Low | High | Source Code |
+Run mccabe and report | Low | High | Source Code |
 Create aggregate risk score | High | High | Functionality |
 Make pkgscan work with requirements.txt | High | Low | Functionality |
 Means of tying back to known entity | High | High | Identity |
-Check for tying back to signed commit | High | Low | Metadata |
 
 ## Potential Mini-Research Project
 Use libraries.io to do analysis of metadata present for packages previously
