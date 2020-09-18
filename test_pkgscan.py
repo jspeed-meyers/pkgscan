@@ -136,3 +136,29 @@ def test_get_github_page():
     assert package.github_page == "https://github.com/IQTLabs/NetworkML"
     package = Package("requests")
     assert package.github_page == "https://github.com/psf/requests"
+
+def test_get_github_data():
+    """Test get_github_data function"""
+    package = Package("pcap2map")
+    try:
+        assert package.github_data['id'] == 254624727
+    except KeyError as e:
+        pass
+    package = Package("scapy")
+    try:
+        assert package.github_data['id'] == 254624727
+    except KeyError as e:
+        pass
+    # TODO: Add more test cases
+
+
+def test_get_github_stars():
+    """Test get_github_stars function"""
+    package = Package("pcap2map")
+    assert (package.github_stars == 0 or package.github_stars == "Rate limiting")
+    package = Package("requests")
+    if isinstance(package.github_stars, int):
+        assert package.github_stars >= 43518
+    elif isinstance(package.github_stars, str):
+        package.github_stars == "Rate limiting"
+    # TODO: Add more test cases
