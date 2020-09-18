@@ -32,6 +32,8 @@ class Package:
             self.get_number_of_packages_maintained_by_maintainers()
         )
         self.github_page = self.get_github_page()
+        self.github_data = self.get_github_data()
+        self.github_stars = self.get_github_stars()
 
     def get_pypi_data(self):
         """Retrieve metadata from PyPI json endpoint"""
@@ -169,7 +171,7 @@ class Package:
     def get_github_page(self):
         """Retrieve github page URL if available"""
 
-        github_link = ""
+        github_page = ""
         # Check potential fields for a github link
         potential_github_fields = [self.pypi_data["info"]["home_page"]]
         # Add project url fields
@@ -178,10 +180,40 @@ class Package:
         for field in potential_github_fields:
             # Any field with github in it must be github link
             if "github" in field:
-                github_link = field
+                github_page = field
                 break
 
-        return github_link
+        return github_page
+
+    def get_github_data(self):
+        """Retrieve github data, if link exists, from API or website"""
+
+        metadata_dict = {}
+
+        if self.github_page:
+
+            # TODO: Create try-except that catches rate limiting
+            # and then uses web scraping instead of API in that case
+            repo_info = self.github_page.split("/")[-2:]
+            url_end = '/'.join(repo_info)
+            github_url = "https://api.github.com/repos/" + url_end
+            response = requests.get(github_url)
+            metadata_dict = response.json()
+
+        return metadata_dict
+
+    def get_github_stars(self):
+        """Retrieve number of github stars from github data"""
+
+        num_stars = "No github found"
+
+        if self.github_page:
+            try:
+                num_stars = self.github_data['stargazers_count']
+            except KeyError as e:
+                num_stars = "Rate limiting"
+
+        return num_stars
 
     # Compare to other package names
 
@@ -211,6 +243,7 @@ class Package:
         for num in self.number_of_packages_maintained_by_maintainers:
             print(num, end=" ")
         print()
+        print("Github stars: " + self.github_stars)
 
     # Print info - more info (-vv)
 
