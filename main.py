@@ -25,7 +25,6 @@ class Package:
 
     def generate_pypi_pkg_dict_data(self):
         """Create a dict of all pypi package-related data"""
-        # TODO: Move all the functions used below to a new pypi pkg module
         self.pypi_pkg["pypi_data"] = self.get_pypi_data()
         self.pypi_pkg["first_release_date"] = self.get_first_release_date()
         self.pypi_pkg["last_release_date"] = self.get_last_release_date()
@@ -38,7 +37,6 @@ class Package:
 
     def generate_pypi_profiles_data(self):
         """Create a dict of all pypi profile-related data"""
-        # TODO: Move all the functions used below to a new pypi profile module
         self.pypi_profiles["maintainers_data"] = self.get_pypi_maintainers_data()
         self.pypi_profiles[
             "maintainers_account_creation_date"
@@ -49,7 +47,6 @@ class Package:
 
     def generate_github_data(self):
         """Create a dict of all github-related data"""
-        # TODO: Move all of the functions used below to a new github module
         self.github_page_data["github_page"] = self.get_github_page()
         self.github_page_data["github_data"] = self.get_github_data()
         self.github_page_data["github_stars"] = self.get_github_stars()
