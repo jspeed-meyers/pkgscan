@@ -11,30 +11,48 @@ from helpers import sort_semantic_version
 class Package:
     """PyPI package class"""
 
-    # pylint: disable=too-many-instance-attributes
-
     def __init__(self, pkg_name):
-        # TODO: Consider refactoring into dictionary
         self.pkg_name = pkg_name
-        self.pypi_data = self.get_pypi_data()
-        self.first_release_date = self.get_first_release_date()
-        self.last_release_date = self.get_last_release_date()
-        self.number_versions = self.get_number_versions()
-        self.author_email = self.get_author_email()
-        self.author_name = self.get_author_name()
-        self.home_page = self.get_home_page()
-        self.pypi_pkg_signed = self.is_pypi_pkg_signed()
-        self.maintainers_list = self.get_pypi_maintainers_list()
-        self.maintainers_data = self.get_pypi_maintainers_data()
-        self.maintainers_account_creation_date = (
-            self.get_maintainers_account_creation_date()
-        )
-        self.number_of_packages_maintained_by_maintainers = (
-            self.get_number_of_packages_maintained_by_maintainers()
-        )
-        self.github_page = self.get_github_page()
-        self.github_data = self.get_github_data()
-        self.github_stars = self.get_github_stars()
+        # PyPI package data
+        self.pypi_pkg = {}
+        self.generate_pypi_pkg_dict_data()
+        # PyPI maintainers data
+        self.pypi_profiles = {}
+        self.generate_pypi_profiles_data()
+        # Github page data
+        self.github_page_data = {}
+        self.generate_github_data()
+
+    def generate_pypi_pkg_dict_data(self):
+        """Create a dict of all pypi package-related data"""
+        # TODO: Move all the functions used below to a new pypi pkg module
+        self.pypi_pkg["pypi_data"] = self.get_pypi_data()
+        self.pypi_pkg["first_release_date"] = self.get_first_release_date()
+        self.pypi_pkg["last_release_date"] = self.get_last_release_date()
+        self.pypi_pkg["number_versions"] = self.get_number_versions()
+        self.pypi_pkg["author_email"] = self.get_author_email()
+        self.pypi_pkg["author_name"] = self.get_author_name()
+        self.pypi_pkg["home_page"] = self.get_home_page()
+        self.pypi_pkg["pypi_pkg_signed"] = self.is_pypi_pkg_signed()
+        self.pypi_pkg["maintainers_list"] = self.get_pypi_maintainers_list()
+
+    def generate_pypi_profiles_data(self):
+        """Create a dict of all pypi profile-related data"""
+        # TODO: Move all the functions used below to a new pypi profile module
+        self.pypi_profiles["maintainers_data"] = self.get_pypi_maintainers_data()
+        self.pypi_profiles[
+            "maintainers_account_creation_date"
+        ] = self.get_maintainers_account_creation_date()
+        self.pypi_profiles[
+            "number_of_packages_maintained_by_maintainers"
+        ] = self.get_number_of_packages_maintained_by_maintainers()
+
+    def generate_github_data(self):
+        """Create a dict of all github-related data"""
+        # TODO: Move all of the functions used below to a new github module
+        self.github_page_data["github_page"] = self.get_github_page()
+        self.github_page_data["github_data"] = self.get_github_data()
+        self.github_page_data["github_stars"] = self.get_github_stars()
 
     def get_pypi_data(self):
         """Retrieve metadata from PyPI json endpoint"""
@@ -50,17 +68,18 @@ class Package:
 
     def get_first_release_date(self):
         """Retrieve date of first release"""
+        # TODO: Create get releases functionality to simplify this and related functions
         # Get the version number associated with the first non-empty release
-        version_list = list(self.pypi_data["releases"])
+        version_list = list(self.pypi_pkg["pypi_data"]["releases"])
         sorted_version_list = sort_semantic_version(version_list)
         # Because some versions lack any info, i.e. are empty, skip those
         # and save the version number of the first non-empty version
         for version in sorted_version_list:
-            if self.pypi_data["releases"][version] != []:
+            if self.pypi_pkg["pypi_data"]["releases"][version] != []:
                 first_release_version = version
                 break
         # Extract upload time
-        upload_time = self.pypi_data["releases"][first_release_version][0][
+        upload_time = self.pypi_pkg["pypi_data"]["releases"][first_release_version][0][
             "upload_time"
         ]
         # Extract the date
@@ -70,44 +89,48 @@ class Package:
     def get_last_release_date(self):
         """Retrieve date of last release"""
         # Get the version number associated with the last release
-        version_list = list(self.pypi_data["releases"])
+        version_list = list(self.pypi_pkg["pypi_data"]["releases"])
         sorted_version_list = sort_semantic_version(version_list)
         last_release_version = sorted_version_list[-1]
         # Extract upload time
-        upload_time = self.pypi_data["releases"][last_release_version][0]["upload_time"]
+        upload_time = self.pypi_pkg["pypi_data"]["releases"][last_release_version][0][
+            "upload_time"
+        ]
         last_release_date = upload_time[:10]
         return last_release_date
 
     def get_author_email(self):
         """Retrieve author email"""
-        author_email = self.pypi_data["info"]["author_email"]
+        author_email = self.pypi_pkg["pypi_data"]["info"]["author_email"]
         return author_email
 
     def get_number_versions(self):
         """Count number of versions released"""
-        version_list = list(self.pypi_data["releases"])
+        version_list = list(self.pypi_pkg["pypi_data"]["releases"])
         num_versions = len(version_list)
         return num_versions
 
     def get_author_name(self):
         """Get author's name"""
-        author_name = self.pypi_data["info"]["author"]
+        author_name = self.pypi_pkg["pypi_data"]["info"]["author"]
         return author_name
 
     def get_home_page(self):
         """Retrieve home page link"""
-        home_page = self.pypi_data["info"]["home_page"]
+        home_page = self.pypi_pkg["pypi_data"]["info"]["home_page"]
         return home_page
 
     def is_pypi_pkg_signed(self):
         """Check if latest version of package is signed"""
         # TODO: Package up this code block into fnto function since
         # it is duplicated from get_last_release date.
-        version_list = list(self.pypi_data["releases"])
+        version_list = list(self.pypi_pkg["pypi_data"]["releases"])
         sorted_version_list = sort_semantic_version(version_list)
         last_release_version = sorted_version_list[-1]
         # Extract whether there is a signature
-        is_signed = self.pypi_data["releases"][last_release_version][0]["has_sig"]
+        is_signed = self.pypi_pkg["pypi_data"]["releases"][last_release_version][0][
+            "has_sig"
+        ]
         return is_signed
 
     def get_pypi_maintainers_list(self):
@@ -128,7 +151,7 @@ class Package:
     def get_pypi_maintainers_data(self):
         """Retrieve metadata from PyPI on all maintainers via web scraping"""
         maintainers_data = []
-        for username in self.maintainers_list:
+        for username in self.pypi_pkg["maintainers_list"]:
             url = "https://pypi.org/user/" + username
             html = requests.get(url)
             soup = BeautifulSoup(html.content, "html.parser")
@@ -141,7 +164,7 @@ class Package:
 
         dates = []
         # Loop through beautiful soup-ified maintainer data to extract dates
-        for soup in self.maintainers_data:
+        for soup in self.pypi_profiles["maintainers_data"]:
             # Because 'time' elements will appear in multiple locations on
             # a PyPI maintainer profile page, filter in only those html
             # tags associated with author metadata
@@ -165,7 +188,7 @@ class Package:
         num_packages = []
 
         # Loop thru beautiful-souped maintainer list
-        for soup in self.maintainers_data:
+        for soup in self.pypi_profiles["maintainers_data"]:
             package_count_elements = soup.findAll("div", {"class": "left-layout__main"})
             # Extract count of number of projects maintained for each profile
             for element in package_count_elements:
@@ -183,9 +206,9 @@ class Package:
 
         github_page = ""
         # Check potential fields for a github link
-        potential_github_fields = [self.pypi_data["info"]["home_page"]]
+        potential_github_fields = [self.pypi_pkg["pypi_data"]["info"]["home_page"]]
         # Add project url fields
-        for _, url in self.pypi_data["info"]["project_urls"].items():
+        for _, url in self.pypi_pkg["pypi_data"]["info"]["project_urls"].items():
             potential_github_fields.append(url)
         for field in potential_github_fields:
             # Any field with github in it must be github link
@@ -200,11 +223,11 @@ class Package:
 
         metadata_dict = {}
 
-        if self.github_page:
+        if self.github_page_data["github_page"]:
 
             # TODO: Create try-except that catches rate limiting
             # and then uses web scraping instead of API in that case
-            repo_info = self.github_page.split("/")[-2:]
+            repo_info = self.github_page_data["github_page"].split("/")[-2:]
             url_end = "/".join(repo_info)
             github_url = "https://api.github.com/repos/" + url_end
             response = requests.get(github_url)
@@ -217,43 +240,36 @@ class Package:
 
         num_stars = "No github found"
 
-        if self.github_page:
+        if self.github_page_data["github_page"]:
             try:
-                num_stars = self.github_data["stargazers_count"]
+                num_stars = self.github_page_data["github_data"]["stargazers_count"]
             except KeyError:
                 num_stars = "Rate limiting"
 
         return num_stars
 
-    # Compare to other package names
-
-    # Get number of downloads
-
-    # Create supsicious score
-
     # Print info - least info (-v)
     def print(self):
         """Print package information"""
-        print("Last release date: " + self.last_release_date)
-        print("First release date: " + self.first_release_date)
-        print("Number of versions: " + str(self.number_versions))
-        print("Home page: " + self.home_page)
-        print("Github link: " + self.github_page)
-        print("Author email: " + self.author_email)
-        print("Author name: " + self.author_name)
+        print("First release date: " + self.pypi_pkg["first_release_date"])
+        print("Number of versions: " + str(self.pypi_pkg["number_versions"]))
+        print("Home page: " + self.pypi_pkg["home_page"])
+        print("Github link: " + self.github_page_data["github_page"])
+        print("Author email: " + self.pypi_pkg["author_email"])
+        print("Author name: " + self.pypi_pkg["author_name"])
         print("Maintainer usernames: ", end="")
-        for maintainer in self.maintainers_list:
+        for maintainer in self.pypi_pkg["maintainers_list"]:
             print(maintainer, end=" ")
         print()
         print("Maintainer accounts creation dates: ", end="")
-        for date in self.maintainers_account_creation_date:
+        for date in self.pypi_profiles["maintainers_account_creation_date"]:
             print(date, end=" ")
         print()
         print("Number of packagages maintained by maintainers: ", end=" ")
-        for num in self.number_of_packages_maintained_by_maintainers:
+        for num in self.pypi_profiles["number_of_packages_maintained_by_maintainers"]:
             print(num, end=" ")
         print()
-        print("Github stars: " + str(self.github_stars))
+        print("Github stars: " + str(self.github_page_data["github_stars"]))
 
     # Print info - more info (-vv)
 
