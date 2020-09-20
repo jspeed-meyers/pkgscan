@@ -183,4 +183,4 @@ def test_get_github_stars():
     if isinstance(requests.github_page_data["github_stars"], int):
         assert requests.github_page_data["github_stars"] >= 43518
     elif isinstance(requests.github_page_data["github_stars"], str):
-        requests.github_page_data["github_stars"] == "Rate limiting"
+        assert requests.github_page_data["github_stars"] == "Rate limiting"
