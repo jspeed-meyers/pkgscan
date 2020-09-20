@@ -22,10 +22,7 @@ def get_author_name(pypi_pkg):
 
 def get_first_release_date(pypi_pkg):
     """Retrieve date of first release"""
-    # TODO: Create get releases functionality to simplify this and related functions
-    # Get the version number associated with the first non-empty release
-    version_list = list(pypi_pkg["pypi_data"]["releases"])
-    sorted_version_list = sort_semantic_version(version_list)
+    sorted_version_list = get_sorted_version_list(pypi_pkg)
     # Because some versions lack any info, i.e. are empty, skip those
     # and save the version number of the first non-empty version
     for version in sorted_version_list:
@@ -49,9 +46,7 @@ def get_home_page(pypi_pkg):
 
 def get_last_release_date(pypi_pkg):
     """Retrieve date of last release"""
-    # Get the version number associated with the last release
-    version_list = list(pypi_pkg["pypi_data"]["releases"])
-    sorted_version_list = sort_semantic_version(version_list)
+    sorted_version_list = get_sorted_version_list(pypi_pkg)
     last_release_version = sorted_version_list[-1]
     # Extract upload time
     upload_time = pypi_pkg["pypi_data"]["releases"][last_release_version][0][
@@ -97,11 +92,14 @@ def get_pypi_maintainers_list(pkg_name):
 
 def is_pypi_pkg_signed(pypi_pkg):
     """Check if latest version of package is signed"""
-    # TODO: Package up this code block into into function since
-    # it is duplicated from get_last_release date.
-    version_list = list(pypi_pkg["pypi_data"]["releases"])
-    sorted_version_list = sort_semantic_version(version_list)
+    sorted_version_list = get_sorted_version_list(pypi_pkg)
     last_release_version = sorted_version_list[-1]
     # Extract whether there is a signature
     is_signed = pypi_pkg["pypi_data"]["releases"][last_release_version][0]["has_sig"]
     return is_signed
+
+def get_sorted_version_list(pypi_pkg):
+    """Create list of package versions sorted"""
+    version_list = list(pypi_pkg["pypi_data"]["releases"])
+    sorted_version_list = sort_semantic_version(version_list)
+    return sorted_version_list
