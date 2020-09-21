@@ -1,6 +1,11 @@
 # pkgscan
 Scan PyPI package metadata to assess security risks
 
+## Motivation
+Make it easier to assess the provenance of the package and associated maintainers
+on PyPI to enable an informed assessment of the package. Moreover, make this
+process quicker than clicking through PyPI and related links.
+
 ## Usage
 `$ git clone https://github.com/jspeed-meyers/pkgscan.git`
 
@@ -24,11 +29,6 @@ Maintainer usernames: Lukasa graffatcolmingov nateprewitt
 Maintainer accounts creation dates: Feb 12, 2017
 ```
 
-
-## Motivation
-Make it easier to assess the provenance of the package and associated maintainers
-on PyPI to enable an informed assessment of the package. Moreover, make this
-process quicker than clicking through PyPI and related links.
 
 ## Unit Tests
 `pytest`
