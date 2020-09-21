@@ -6,6 +6,8 @@ Scan PyPI package metadata to assess security risks
 
 `$ cd pkgscan`
 
+`pip install -r requirements.txt`
+
 `$ python main.py [package_name]`
 
 For instance:
