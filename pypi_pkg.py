@@ -97,6 +97,7 @@ def is_pypi_pkg_signed(pypi_pkg):
     is_signed = pypi_pkg["pypi_data"]["releases"][last_release_version][0]["has_sig"]
     return is_signed
 
+
 def sort_semantic_version(unsorted_list):
     """Sort a list of semantic version numbers"""
     sorted_list = sorted(unsorted_list, key=lambda x: version.Version(x))

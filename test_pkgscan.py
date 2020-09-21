@@ -185,6 +185,7 @@ def test_get_github_stars():
         # around thanksgiving 2020.
         assert requests.github_page_data["github_stars"][0:2] == "43"
 
+
 def test_count_number_downloads():
     """Test count_number_downloads function"""
     pass
