@@ -63,7 +63,10 @@ class Package:
     def generate_github_data(self):
         """Create a dict of all github-related data"""
         self.github_page_data["github_page"] = get_github_page(self.pypi_pkg)
-        self.github_page_data["github_data"] = get_github_data(self.github_page_data)
+        (
+            self.github_page_data["github_data"],
+            self.github_page_data["github_data_source"],
+        ) = get_github_data(self.github_page_data)
         self.github_page_data["github_stars"] = get_github_stars(self.github_page_data)
 
     def print(self):
