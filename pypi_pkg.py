@@ -98,6 +98,7 @@ def is_pypi_pkg_signed(pypi_pkg):
     is_signed = pypi_pkg["pypi_data"]["releases"][last_release_version][0]["has_sig"]
     return is_signed
 
+
 def get_sorted_version_list(pypi_pkg):
     """Create list of package versions sorted"""
     version_list = list(pypi_pkg["pypi_data"]["releases"])
