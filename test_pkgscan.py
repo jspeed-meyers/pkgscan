@@ -164,23 +164,23 @@ def test_get_github_page():
 
 def test_get_github_data():
     """Test get_github_data function"""
-    try:
+    if pcap2map.github_page_data["github_data_source"] == "API":
         assert pcap2map.github_page_data["github_data"]["id"] == 254624727
-    except KeyError:
-        pass
-    try:
+    else:
+        assert isinstance(pcap2map.github_page_data["github_data"], BeautifulSoup)
+    if scapy.github_page_data["github_data_source"] == "API":
         assert scapy.github_page_data["github_data"]["id"] == 254624727
-    except KeyError:
-        pass
+    else:
+        assert isinstance(scapy.github_page_data["github_data"], BeautifulSoup)
 
 
 def test_get_github_stars():
     """Test get_github_stars function"""
-    assert (
-        pcap2map.github_page_data["github_stars"] == 0
-        or pcap2map.github_page_data["github_stars"] == "Rate limiting"
-    )
-    if isinstance(requests.github_page_data["github_stars"], int):
-        assert requests.github_page_data["github_stars"] >= 43518
-    elif isinstance(requests.github_page_data["github_stars"], str):
-        assert requests.github_page_data["github_stars"] == "Rate limiting"
+    assert pcap2map.github_page_data["github_stars"] in [0, "0"]
+    if requests.github_page_data["github_data_source"] == "API":
+        assert requests.github_page_data["github_stars"] > 43000
+    else:
+        # Check only first couple of numbers since github stars is constantly
+        # increasing for requests. This tests will eventually break, probably
+        # around thanksgiving 2020.
+        assert requests.github_page_data["github_stars"][0:2] == "43"
