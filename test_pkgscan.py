@@ -3,7 +3,7 @@
 from bs4 import BeautifulSoup
 
 from main import Package
-from helpers import sort_semantic_version
+from pypi_pkg import sort_semantic_version
 
 # Instantiate all packages once and only once
 awscli = Package("awscli")
@@ -184,3 +184,7 @@ def test_get_github_stars():
         # increasing for requests. This tests will eventually break, probably
         # around thanksgiving 2020.
         assert requests.github_page_data["github_stars"][0:2] == "43"
+
+def test_count_number_downloads():
+    """Test count_number_downloads function"""
+    pass

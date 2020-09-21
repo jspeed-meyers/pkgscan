@@ -3,9 +3,8 @@ import json
 import sys
 
 from bs4 import BeautifulSoup
+from packaging import version
 import requests
-
-from helpers import sort_semantic_version
 
 
 def get_author_email(pypi_pkg):
@@ -97,6 +96,11 @@ def is_pypi_pkg_signed(pypi_pkg):
     # Extract whether there is a signature
     is_signed = pypi_pkg["pypi_data"]["releases"][last_release_version][0]["has_sig"]
     return is_signed
+
+def sort_semantic_version(unsorted_list):
+    """Sort a list of semantic version numbers"""
+    sorted_list = sorted(unsorted_list, key=lambda x: version.Version(x))
+    return sorted_list
 
 
 def get_sorted_version_list(pypi_pkg):
