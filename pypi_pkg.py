@@ -1,4 +1,5 @@
 """Functions related to gathering data about a particular package on PyPI"""
+from datetime import datetime, timedelta
 import json
 import sys
 
@@ -24,9 +25,9 @@ def get_first_release_date(pypi_pkg):
     sorted_version_list = get_sorted_version_list(pypi_pkg)
     # Because some versions lack any info, i.e. are empty, skip those
     # and save the version number of the first non-empty version
-    for version in sorted_version_list:
-        if pypi_pkg["pypi_data"]["releases"][version] != []:
-            first_release_version = version
+    for pkg_version in sorted_version_list:
+        if pypi_pkg["pypi_data"]["releases"][pkg_version] != []:
+            first_release_version = pkg_version
             break
     # Extract upload time
     upload_time = pypi_pkg["pypi_data"]["releases"][first_release_version][0][
@@ -53,6 +54,35 @@ def get_last_release_date(pypi_pkg):
     ]
     last_release_date = upload_time[:10]
     return last_release_date
+
+
+def get_number_releases_past_year(pypi_pkg):
+    """Retrieve mean time between releases over past two years"""
+    sorted_version_list = get_sorted_version_list(pypi_pkg)
+    # Determine current and date one year ago
+    today = datetime.now()
+    one_year_ago = today - timedelta(days=365)
+
+    num_versions_within_last_year = 0
+    # Loop thru versions in reverse order
+    sorted_version_list.reverse()
+    for pkg_version in sorted_version_list:
+        # Retrieve version date
+        try:
+            upload_time = pypi_pkg["pypi_data"]["releases"][pkg_version][0][
+                "upload_time"
+            ]
+        except IndexError:
+            upload_time = "2010-11-04T00:05:23"
+        # Convert version date to datetime object
+        upload_datetime = datetime.fromisoformat(upload_time)
+        # Check if version date is within past year
+        if upload_datetime > one_year_ago:
+            num_versions_within_last_year += 1
+        else:
+            break
+
+    return num_versions_within_last_year
 
 
 def get_number_versions(pypi_pkg):

@@ -9,6 +9,7 @@ from pypi_pkg import (
     get_first_release_date,
     get_home_page,
     get_last_release_date,
+    get_number_releases_past_year,
     get_number_versions,
     get_pypi_data,
     get_pypi_maintainers_list,
@@ -46,6 +47,9 @@ class Package:
         self.pypi_pkg["first_release_date"] = get_first_release_date(self.pypi_pkg)
         self.pypi_pkg["last_release_date"] = get_last_release_date(self.pypi_pkg)
         self.pypi_pkg["number_versions"] = get_number_versions(self.pypi_pkg)
+        self.pypi_pkg["number_releases_past_year"] = get_number_releases_past_year(
+            self.pypi_pkg
+        )
         self.pypi_pkg["author_email"] = get_author_email(self.pypi_pkg)
         self.pypi_pkg["author_name"] = get_author_name(self.pypi_pkg)
         self.pypi_pkg["home_page"] = get_home_page(self.pypi_pkg)
@@ -76,6 +80,7 @@ class Package:
     def print(self):
         """Print package information"""
         print("First release date: " + self.pypi_pkg["first_release_date"])
+        print("Last release data: " + self.pypi_pkg["last_release_date"])
         print("Number of versions: " + str(self.pypi_pkg["number_versions"]))
         print("Home page: " + self.pypi_pkg["home_page"])
         print("Github link: " + self.github_page_data["github_page"])
