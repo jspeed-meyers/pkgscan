@@ -82,6 +82,10 @@ class Package:
         print("First release date: " + self.pypi_pkg["first_release_date"])
         print("Last release data: " + self.pypi_pkg["last_release_date"])
         print("Number of versions: " + str(self.pypi_pkg["number_versions"]))
+        print(
+            "Number releases past year: "
+            + str(self.pypi_pkg["number_releases_past_year"])
+        )
         print("Home page: " + self.pypi_pkg["home_page"])
         print("Github link: " + self.github_page_data["github_page"])
         print("Author email: " + self.pypi_pkg["author_email"])
