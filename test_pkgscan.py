@@ -190,3 +190,11 @@ def test_count_number_downloads():
     """Test count_number_downloads function"""
     assert requests.downloads["data"]["last_month"] > 50000000
     assert pcap2map.downloads["data"]["last_month"] < 1000
+
+
+def test_number_releases_past_year():
+    """Test number_releases_past_year function"""
+    # These tests could break.
+    assert networkml.pypi_pkg["number_releases_past_year"] >= 4
+    assert requests.pypi_pkg["number_releases_past_year"] >= 2
+    assert pcap2map.pypi_pkg["number_releases_past_year"] >= 1
