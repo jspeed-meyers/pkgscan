@@ -22,6 +22,7 @@ from pypi_profiles import (
 
 from downloads import get_download_info
 
+
 class Package:
     """PyPI package class"""
 
@@ -93,8 +94,10 @@ class Package:
             print(num, end=" ")
         print()
         print("Github stars: " + str(self.github_page_data["github_stars"]))
-        print("Number of PyPI downloads in past month:",
-              str(self.downloads["data"]["last_month"]))
+        print(
+            "Number of PyPI downloads in past month:",
+            str(self.downloads["data"]["last_month"]),
+        )
 
 
 if __name__ == "__main__":

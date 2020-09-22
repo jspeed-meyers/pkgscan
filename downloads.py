@@ -2,6 +2,7 @@
 
 import requests
 
+
 def get_download_info(pkg_name):
     """Retrieve package download data from pypistats"""
     url = "https://pypistats.org/api/packages/" + pkg_name + "/recent"
