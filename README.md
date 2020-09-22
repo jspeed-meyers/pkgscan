@@ -19,14 +19,17 @@ For instance:
 
 ```
 $ python main.py requests
-Last release date: 2020-06-17
 First release date: 2011-02-14
 Number of versions: 140
 Home page: https://requests.readthedocs.io
+Github link: https://github.com/psf/requests
 Author email: me@kennethreitz.org
 Author name: Kenneth Reitz
 Maintainer usernames: Lukasa graffatcolmingov nateprewitt
 Maintainer accounts creation dates: Feb 12, 2017
+Number of packagages maintained by maintainers:  23 66 4
+Github stars: 43533
+Number of PyPI downloads in past month: 63819668
 ```
 
 
@@ -38,7 +41,8 @@ Maintainer accounts creation dates: Feb 12, 2017
 Feature | Utility | Difficulty | Category | Completed
 --------------- | --------------- | --------------- | --------------- | ---------------
 maintainer's pypi account creation date | High | Low | Identity | X
-number of projects maintained by maintainers | High | Low | Identity | X
+number of projects maintained by maintainers | High | Low | Identity | 
+Means of tying back to known entity | High | High | Identity |
 Check for any github link | High | Low | Metadata | X
 Count number downloads | High | Low | Metadata | X
 Check if package is signed | High | Low | Metadata | X
@@ -55,7 +59,7 @@ Run pylint and report | High | Low | Source Code |
 Run mccabe and report | High | Low | Source Code |
 Create aggregate risk score | High | High | Functionality |
 Make pkgscan work with requirements.txt | High | Low | Functionality |
-Means of tying back to known entity | High | High | Identity |
+Visualize results with HTML | High | Low | Functionality |
 
 ## Potential Mini-Research Project
 Use libraries.io to do analysis of metadata present for packages previously
