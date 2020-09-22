@@ -47,7 +47,7 @@ Check for any github link | High | Low | Metadata | X
 Count number downloads | High | Low | Metadata | X
 Check if package is signed | High | Low | Metadata | X
 '# github stars' | Low | Low | Metadata | X
-Mean time between releases | Low | Low | Metadata |
+Number of releases past year | Low | Low | Metadata | X
 Github and PyPI actually linked | High | High | Metadata |
 Recent change in package maintainers | High | High | Metadata |
 Measure package committer turnover | High | High | Metadata |
