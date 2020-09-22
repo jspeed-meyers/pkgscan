@@ -188,4 +188,5 @@ def test_get_github_stars():
 
 def test_count_number_downloads():
     """Test count_number_downloads function"""
-    pass
+    assert requests.downloads["data"]["last_month"] > 50000000
+    assert pcap2map.downloads["data"]["last_month"] < 1000
