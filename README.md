@@ -41,7 +41,7 @@ Number of PyPI downloads in past month: 63819668
 Feature | Utility | Difficulty | Category | Completed
 --------------- | --------------- | --------------- | --------------- | ---------------
 maintainer's pypi account creation date | High | Low | Identity | X
-number of projects maintained by maintainers | High | Low | Identity | 
+number of projects maintained by maintainers | High | Low | Identity | X
 Means of tying back to known entity | High | High | Identity |
 Check for any github link | High | Low | Metadata | X
 Count number downloads | High | Low | Metadata | X
