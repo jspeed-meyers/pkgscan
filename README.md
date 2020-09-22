@@ -40,7 +40,7 @@ Feature | Utility | Difficulty | Category | Completed
 maintainer's pypi account creation date | High | Low | Identity | X
 number of projects maintained by maintainers | High | Low | Identity | X
 Check for any github link | High | Low | Metadata | X
-Count number downloads | High | Low | Metadata |
+Count number downloads | High | Low | Metadata | X
 Check if package is signed | High | Low | Metadata | X
 '# github stars' | Low | Low | Metadata | X
 Mean time between releases | Low | Low | Metadata |
