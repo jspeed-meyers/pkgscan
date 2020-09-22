@@ -20,6 +20,7 @@ from pypi_profiles import (
     get_pypi_maintainers_data,
 )
 
+from downloads import get_download_info
 
 class Package:
     """PyPI package class"""
@@ -35,6 +36,8 @@ class Package:
         # Github page data
         self.github_page_data = {}
         self.generate_github_data()
+        # Get package download data
+        self.downloads = get_download_info(self.pkg_name)
 
     def generate_pypi_pkg_dict_data(self):
         """Create a dict of all pypi package-related data"""
@@ -90,6 +93,8 @@ class Package:
             print(num, end=" ")
         print()
         print("Github stars: " + str(self.github_page_data["github_stars"]))
+        print("Number of PyPI downloads in past month:",
+              str(self.downloads["data"]["last_month"]))
 
 
 if __name__ == "__main__":
