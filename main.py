@@ -32,7 +32,7 @@ from static import (
 class Package:
     """PyPI package class"""
 
-    def __init__(self, pkg_name):
+    def __init__(self, pkg_name, verbosity):
         self.pkg_name = pkg_name
         # PyPI package data
         self.pypi_pkg = {}
@@ -45,6 +45,10 @@ class Package:
         self.generate_github_data()
         # Get package download data
         self.downloads = get_download_info(self.pkg_name)
+        # Perform static code analysis if verbosity selected
+        if verbosity:
+            self.static_analysis = {}
+            self.generate_static_analysis_results()
 
     def generate_pypi_pkg_dict_data(self):
         """Create a dict of all pypi package-related data"""
@@ -118,11 +122,25 @@ class Package:
             "Number of PyPI downloads in past month:",
             str(self.downloads["data"]["last_month"]),
         )
+        if verbosity:
+            print(
+                "Bandit vulnerabilities count (including #nosec): ",
+                str(self.static_analysis["bandit"]["count"]),
+            )
 
 
 if __name__ == "__main__":
 
-    # Collect package name from command line
-    # TODO: Use argparse instead
-    package = Package(sys.argv[1])
-    package.print()
+    # Collect package name and verbosity from command line
+    parser = argparse.ArgumentParser()
+    parser.add_argument(
+        "-v",
+        "--verbosity",
+        action="count",
+        help="Increase verbosity and perform static analysis.",
+    )
+    parser.add_argument("package_name", type=str, default=0, help="Input package name")
+    args = parser.parse_args()
+
+    package = Package(args.package_name, args.verbosity)
+    package.print(args.verbosity)
