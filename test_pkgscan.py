@@ -6,23 +6,23 @@ from main import Package
 from pypi_pkg import sort_semantic_version
 
 # Instantiate all packages once and only once
-awscli = Package("awscli")
-botocore = Package("botocore")
-django = Package("django")
-faucet = Package("faucet")
-good = Package("good")
-matplotlib = Package("matplotlib")
-networkml = Package("networkml")
-numpy = Package("numpy")
-pandas = Package("pandas")
-pcap2map = Package("pcap2map")
-portunus = Package("portunus")
-pytest = Package("pytest")
-requests = Package("requests")
-ryu = package = Package("ryu")
-scapy = Package("scapy")
-six = Package("six")
-urllib3 = Package("urllib3")
+awscli = Package("awscli", False)
+botocore = Package("botocore", False)
+django = Package("django", False)
+faucet = Package("faucet", False)
+good = Package("good", False)
+matplotlib = Package("matplotlib", False)
+networkml = Package("networkml", False)
+numpy = Package("numpy", False)
+pandas = Package("pandas", False)
+pcap2map = Package("pcap2map", True)
+portunus = Package("portunus", False)
+pytest = Package("pytest", False)
+requests = Package("requests", False)
+ryu = package = Package("ryu", False)
+scapy = Package("scapy", False)
+six = Package("six", False)
+urllib3 = Package("urllib3", False)
 
 
 def test_sort_semantic_version():
@@ -34,7 +34,7 @@ def test_sort_semantic_version():
 
 def test_package_class():
     """Test instantiation of package class"""
-    Package("requests")  # pylint: disable=unused-variable
+    Package("requests", False)  # pylint: disable=unused-variable
 
 
 def test_get_first_release_date():
