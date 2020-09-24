@@ -198,3 +198,9 @@ def test_number_releases_past_year():
     assert networkml.pypi_pkg["number_releases_past_year"] >= 4
     assert requests.pypi_pkg["number_releases_past_year"] >= 2
     assert pcap2map.pypi_pkg["number_releases_past_year"] >= 1
+
+
+def test_bandit_static_analysis():
+    """Test bandit static analysis results"""
+    assert pcap2map.static_analysis["bandit"]["count"] == 0
+    # TODO: Test additional bandit static analysis capability
