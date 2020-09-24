@@ -1,7 +1,9 @@
 """Package class to store data about one PyPI package"""
 
+import argparse
 import sys
 
+from downloads import get_download_info
 from github_data import get_github_data, get_github_page, get_github_stars
 from pypi_pkg import (
     get_author_email,
@@ -20,8 +22,11 @@ from pypi_profiles import (
     get_number_of_packages_maintained_by_maintainers,
     get_pypi_maintainers_data,
 )
-
-from downloads import get_download_info
+from static import (
+    download_and_unzip_package,
+    generate_bandit_dict,
+    remove_package_and_static_analysis_artifacts,
+)
 
 
 class Package:
@@ -77,7 +82,13 @@ class Package:
         ) = get_github_data(self.github_page_data)
         self.github_page_data["github_stars"] = get_github_stars(self.github_page_data)
 
-    def print(self):
+    def generate_static_analysis_results(self):
+        """Create a dict of all static analysis-related results"""
+        download_and_unzip_package(self.pkg_name)
+        self.static_analysis["bandit"] = generate_bandit_dict()
+        remove_package_and_static_analysis_artifacts()
+
+    def print(self, verbosity):
         """Print package information"""
         print("First release date: " + self.pypi_pkg["first_release_date"])
         print("Last release data: " + self.pypi_pkg["last_release_date"])
