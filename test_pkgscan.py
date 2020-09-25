@@ -21,7 +21,7 @@ pytest = Package("pytest", False)
 requests = Package("requests", False)
 ryu = package = Package("ryu", False)
 scapy = Package("scapy", False)
-six = Package("six", False)
+six = Package("six", True)
 urllib3 = Package("urllib3", False)
 
 
@@ -170,8 +170,6 @@ def test_get_github_data():
         assert isinstance(pcap2map.github_page_data["github_data"], BeautifulSoup)
     if scapy.github_page_data["github_data_source"] == "API":
         assert scapy.github_page_data["github_data"]["id"] == 254624727
-    else:
-        assert isinstance(scapy.github_page_data["github_data"], BeautifulSoup)
 
 
 def test_get_github_stars():
@@ -202,5 +200,6 @@ def test_number_releases_past_year():
 
 def test_bandit_static_analysis():
     """Test bandit static analysis results"""
-    assert pcap2map.static_analysis["bandit"]["count"] == 0
-    # TODO: Test additional bandit static analysis capability
+    assert pcap2map.static_analysis["bandit"]["count_all"] == 0
+    assert six.static_analysis["bandit"]["count_all"] == 1
+    assert six.static_analysis["bandit"]["count_medium"] == 1
