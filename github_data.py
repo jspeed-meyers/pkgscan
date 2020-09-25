@@ -44,8 +44,11 @@ def get_github_data(github_page_data):
         if not response.ok:
             github_data_source = "webscrape"
             html = requests.get(github_page_data["github_page"])
-            soup = BeautifulSoup(html.content, "html.parser")
-            github_data = soup
+            try:
+                soup = BeautifulSoup(html.content, "html.parser")
+                github_data = soup
+            except TypeError:
+                github_data = None
 
     return github_data, github_data_source
 
@@ -55,17 +58,16 @@ def get_github_stars(github_page_data):
 
     num_stars = "No github found"
 
-    # print(github_page_data["github_data_source"])
     if github_page_data["github_page"]:
         # If data on github comes form github API, parse json
         if github_page_data["github_data_source"] == "API":
             num_stars = github_page_data["github_data"]["stargazers_count"]
         # If data on github comes from web scraping, parse beautiful soup object
         elif github_page_data["github_data_source"] == "webscrape":
-            num_stars_element = github_page_data["github_data"].find(
-                "a", {"class": "social-count js-social-count"}
-            )
             try:
+                num_stars_element = github_page_data["github_data"].find(
+                    "a", {"class": "social-count js-social-count"}
+                )
                 num_stars = num_stars_element.contents[0].strip()
             except AttributeError:
                 num_stars = "Error"
