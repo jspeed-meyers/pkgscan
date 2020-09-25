@@ -122,10 +122,23 @@ class Package:
             "Number of PyPI downloads in past month:",
             str(self.downloads["data"]["last_month"]),
         )
-        if verbosity:
+        if verbosity >= 1:
             print(
                 "Bandit vulnerabilities count (including #nosec): ",
-                str(self.static_analysis["bandit"]["count"]),
+                str(self.static_analysis["bandit"]["count_all"]),
+            )
+        if verbosity >= 2:
+            print(
+                "Bandit high severity vulnerabilities count (including #nosec): ",
+                str(self.static_analysis["bandit"]["count_high"]),
+            )
+            print(
+                "Bandit medium severity vulnerabilities count (including #nosec): ",
+                str(self.static_analysis["bandit"]["count_medium"]),
+            )
+            print(
+                "Bandit low severity vulnerabilities count (including #nosec): ",
+                str(self.static_analysis["bandit"]["count_low"]),
             )
 
 
@@ -137,9 +150,10 @@ if __name__ == "__main__":
         "-v",
         "--verbosity",
         action="count",
+        default=0,
         help="Increase verbosity and perform static analysis.",
     )
-    parser.add_argument("package_name", type=str, default=0, help="Input package name")
+    parser.add_argument("package_name", type=str, help="Input package name")
     args = parser.parse_args()
 
     package = Package(args.package_name, args.verbosity)
