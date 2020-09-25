@@ -13,7 +13,7 @@ import pandas as pd
 def download_and_unzip_package(package):
     """Download via pip the desired package and then unzip"""
 
-    # TODO: Will this work for all downloads? Are they all tar files?
+    # TODO: Will this work for all downloads? Are they all .whl files?
     # TODO: In the future, analyze dependencies too.
 
     if os.path.exists("pkg-source"):
@@ -35,7 +35,7 @@ def download_and_unzip_package(package):
         ]
     )
 
-    # Identify and unzip any .tar or .gz files
+    # Identify and unzip any .whl files
     file_list = glob.glob("pkg-source/*.whl")
     for file in file_list:
         with zipfile.ZipFile(file, "r") as zip_ref:
@@ -69,10 +69,13 @@ def generate_bandit_dict():
     if os.path.exists("pkg-source/bandit.csv"):
         try:
             df = pd.read_csv("pkg-source/bandit.csv")
-            # TODO: Add additional analyses
-            bandit["count"] = len(df)
+            # Count number of vulnerabilities by severity
+            bandit["count_all"] = len(df)
+            bandit["count_low"] = len(df[df.issue_severity == "LOW"])
+            bandit["count_medium"] = len(df[df.issue_severity == "MEDIUM"])
+            bandit["count_high"] = len(df[df.issue_severity == "HIGH"])
         except:
-            bandit["count"] = "Error"
+            bandit["count_all"] = "Error"
     return bandit
 
 
