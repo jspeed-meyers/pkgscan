@@ -1,7 +1,6 @@
 """Package class to store data about one PyPI package"""
 
 import argparse
-import sys
 
 from downloads import get_download_info
 from github_data import get_github_data, get_github_page, get_github_stars
