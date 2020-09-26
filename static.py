@@ -140,8 +140,12 @@ def generate_pylint_dict():
                 continue
 
     # Take average of lint scores
-    average_lint_score = sum(lint_scores) / len(lint_scores)
-    pylint["average_lint_score"] = round(average_lint_score, 2)
+    # TODO: Why is no files found sometimes?
+    if len(lint_scores) == 0:
+        pylint["average_lint_score"] = "No files found"
+    else:
+        average_lint_score = sum(lint_scores) / len(lint_scores)
+        pylint["average_lint_score"] = round(average_lint_score, 2)
 
     return pylint
 
