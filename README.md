@@ -54,12 +54,15 @@ Measure package committer turnover | High | High | Metadata |
 Similar name to often downloaded package? | High | High | Metadata |
 Check for tying back to signed commit | High | Low | Metadata |
 Correspondence between github and PyPI code | High | High | Source Code |
+Analyze dependencies too (count, names, etc.) | High | Low | Source Code |
 Run bandit and report | High | Low | Source Code | X
-Run pylint and report | High | Low | Source Code |
+Run pylint and report | High | Low | Source Code | X
 Run mccabe and report | High | Low | Source Code |
+Check for obfuscated code | High | Low | Source Code |
 Check for high risk behavior | High | High | Source Code |
 Create aggregate risk score | High | High | Functionality |
 Make pkgscan work with requirements.txt | High | Low | Functionality |
+Mkae pkgscan work with specified version number | High | Low | Functionality
 Visualize results with HTML | High | Low | Functionality |
 
 ## Potential Mini-Research Project
