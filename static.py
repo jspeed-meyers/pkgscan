@@ -2,6 +2,7 @@
 
 import glob
 import os
+import re
 import shutil
 import subprocess
 import sys
@@ -77,6 +78,71 @@ def generate_bandit_dict():
         except:
             bandit["count_all"] = "Error"
     return bandit
+
+
+def generate_pylint_files():
+    """Run pylint against each .py file and create folder of output files"""
+
+    # Identify all .py files recursively
+    # TODO: Why do I need both globs? Investigate glob more
+    file_list = glob.glob("pkg-source/**/*.py")
+    file_list.extend(glob.glob("pkg-source/*.py"))
+
+    # Create directory to store pylint output files
+    os.mkdir("pkg-source/pylint")
+
+    # Run pylint againt each file and store output as text files
+    for file in file_list:
+        # Extract name for storing a text file of pylint output per file
+        file_name_with_extension = os.path.basename(file)
+        file_name_no_extension = os.path.splitext(file_name_with_extension)[0]
+        results_file_path = os.path.join(
+            "pkg-source", "pylint", file_name_no_extension + ".txt"
+        )
+        try:
+            # Run pylint and pipe output to a text file for later analysis
+            output_file = open(results_file_path, "w")
+            subprocess.check_call(["pylint", file], stdout=output_file)
+        except subprocess.CalledProcessError:
+            pass
+
+
+def generate_pylint_dict():
+    """Create dict storing pylint-related data"""
+
+    # Create pylint output for all .py files
+    generate_pylint_files()
+
+    # Dict for returning pylint data
+    pylint = {}
+
+    # List to store pylint code scores for each .py file
+    lint_scores = []
+
+    # Find all text files storing pylint output
+    file_list = glob.glob("pkg-source/pylint/*.txt")
+    for file in file_list:
+        # Read in file contents
+        with open(file, "r") as f:
+            try:
+                # Extract line that contains score (quirk of pylint)
+                score_line = f.readlines()[-4]
+                # Check that score line exists at all
+                if score_line:
+                    # Find first occurrence of score
+                    score = re.search(r"[\d]+.\d\d?", score_line).group(0)
+                    # Check that score number exists
+                    if score:
+                        lint_scores.append(float(score))
+            # TODO: Make more robust. Why do index errors occur?
+            except IndexError:
+                continue
+
+    # Take average of lint scores
+    average_lint_score = sum(lint_scores) / len(lint_scores)
+    pylint["average_lint_score"] = round(average_lint_score, 2)
+
+    return pylint
 
 
 def remove_package_and_static_analysis_artifacts():

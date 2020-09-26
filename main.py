@@ -24,6 +24,7 @@ from pypi_profiles import (
 from static import (
     download_and_unzip_package,
     generate_bandit_dict,
+    generate_pylint_dict,
     remove_package_and_static_analysis_artifacts,
 )
 
@@ -89,6 +90,7 @@ class Package:
         """Create a dict of all static analysis-related results"""
         download_and_unzip_package(self.pkg_name)
         self.static_analysis["bandit"] = generate_bandit_dict()
+        self.static_analysis["pylint"] = generate_pylint_dict()
         remove_package_and_static_analysis_artifacts()
 
     def print(self, verbosity):
@@ -125,6 +127,10 @@ class Package:
             print(
                 "Bandit vulnerabilities count (including #nosec): ",
                 str(self.static_analysis["bandit"]["count_all"]),
+            )
+            print(
+                "Pylint average lint score: ",
+                str(self.static_analysis["pylint"]["average_lint_score"]),
             )
         if verbosity >= 2:
             print(
