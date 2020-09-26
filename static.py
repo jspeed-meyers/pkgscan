@@ -130,9 +130,10 @@ def generate_pylint_dict():
                 # Check that score line exists at all
                 if score_line:
                     # Find first occurrence of score
-                    score = re.search(r"[\d]+.\d\d?", score_line).group(0)
+                    score_match = re.search(r"[\d]+.\d\d?", score_line)
                     # Check that score number exists
-                    if score:
+                    if score_match:
+                        score = score_match.group(0)
                         lint_scores.append(float(score))
             # TODO: Make more robust. Why do index errors occur?
             except IndexError:
