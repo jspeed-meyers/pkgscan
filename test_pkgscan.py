@@ -203,3 +203,8 @@ def test_bandit_static_analysis():
     assert pcap2map.static_analysis["bandit"]["count_all"] == 0
     assert six.static_analysis["bandit"]["count_all"] == 1
     assert six.static_analysis["bandit"]["count_medium"] == 1
+
+
+def test_pylint_static_analysis():
+    """Test pylint static analysis results"""
+    assert six.static_analysis["pylint"]["average_lint_score"] == 4.73
