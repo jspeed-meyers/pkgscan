@@ -60,10 +60,12 @@ Run pylint and report | High | Low | Source Code | X
 Run mccabe and report | High | Low | Source Code |
 Check for obfuscated code | High | Low | Source Code |
 Check for high risk behavior | High | High | Source Code |
+Output results in JSON | High | Low | Functionality |
 Create aggregate risk score | High | High | Functionality |
 Make pkgscan work with requirements.txt | High | Low | Functionality |
 Mkae pkgscan work with specified version number | High | Low | Functionality
 Visualize results with HTML | High | Low | Functionality |
+Build PyPI observatory capability | High | High | Functionality
 
 ## Potential Mini-Research Project
 Use libraries.io to do analysis of metadata present for packages previously
